@@ -33,10 +33,9 @@ def compute_fitness(agent, trials):
 
 def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 100, num_elite = 5, survival_rate = .2, logging_file = 'data.csv'):
 
-    data=[[np.ones(3)]]
-    headers = ['top_gene']
-    df = pd.DataFrame(data, columns=headers)
-    df.to_csv(f'data/{logging_file}', index=False)
+    data = [[np.ones(3)]]
+    df = pd.DataFrame(data, columns = ['top_weight'])
+    df.to_csv(f'data/{logging_file}', index = False)
 
     population = [Sai_AI() for k in range(pop_size)]
 
@@ -58,7 +57,7 @@ def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 100, num_elite = 5, 
 
         next_gen = []
 
-        sorted_pop = sorted(population, reverse=True)
+        sorted_pop = sorted(population, reverse = True)
 
         elite_fit_score = 0
         elite_genes = np.zeros(3)
@@ -77,8 +76,8 @@ def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 100, num_elite = 5, 
             parents = random.sample(parents, 2)
             next_gen.append(cross(parents[0], parents[1]))
 
-        data = [top_agent.weights]
-        df = pd.DataFrame(data, columns = headers)
+        data = [[top_agent.weights]]
+        df = pd.DataFrame(data, columns = "top_weight")
         df.to_csv(f'data/{logging_file}', mode = 'a', index = False, header = False)
 
         population = next_gen
