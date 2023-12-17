@@ -35,7 +35,7 @@ def bumpiness(npeaks):
 
 
 class Sai_AI:
-    def __init__(self, weights = None, nfeatures = 3, mutate = True, noise = 0.1): # weights makes a vector consisting of weights for all the features
+    def __init__(self, weights = None, nfeatures = 3, mutate = False, noise = 0.1): # weights makes a vector consisting of weights for all the features
 
         self.weights = weights
         self.nfeatures = nfeatures
@@ -47,11 +47,14 @@ class Sai_AI:
         elif mutate == False:
             self.weights = weights
         else:
-            self.weights = genotype * (np.array([np.random.normal(1, noise) for i in range(nfeatures)])) # adds additional randomness at each generation
+            self.weights = weights * (np.array([np.random.normal(1, noise) for i in range(nfeatures)])) # adds additional randomness at each generation
 
         self.fit_score = 0.0 # individual fitness (arithmetic mean of a performance measure over a series of Tetris games)
         self.fit_rel = 0.0 # relative fitness compared to other agents
 
+    def __lt__(self, other):
+        
+        return (self.fit_score < other.fit_score)
 
     def how_good(self, board):
 
