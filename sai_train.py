@@ -31,7 +31,7 @@ def compute_fitness(agent, trials):
      
     return np.average(np.array(fitness))
 
-def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 100, num_elite = 5, survival_rate = .2, logging_file = 'data.csv'):
+def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 50, num_elite = 5, survival_rate = .2, logging_file = 'data.csv'):
 
     data = [[np.ones(3)]]
     df = pd.DataFrame(data, columns = ['top_weight'])
@@ -77,7 +77,7 @@ def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 100, num_elite = 5, 
             next_gen.append(cross(parents[0], parents[1]))
 
         data = [[top_agent.weights]]
-        df = pd.DataFrame(data, columns = "top_weight")
+        df = pd.DataFrame(data, columns = ["top_weight"])
         df.to_csv(f'data/{logging_file}', mode = 'a', index = False, header = False)
 
         population = next_gen
