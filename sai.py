@@ -37,7 +37,7 @@ def bumpiness(npeaks):
 class Sai_AI:
     def __init__(self, weights = None, nfeatures = 3, mutate = False, noise = 0.1): # weights makes a vector consisting of weights for all the features
 
-        self.weights = weights
+        self.weights = [-1.19436948, -0.19174679, -0.27143913]
         self.nfeatures = nfeatures
         self.mutate = mutate
         self.noise = noise
