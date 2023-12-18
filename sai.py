@@ -17,7 +17,7 @@ def peaks(board):
         
     for col in range(nrow): # loops through every column
         if 1 in board[:, col]: # loops through each cell in a given column
-            k = ncol - np.argmax(board[:, col], axis=0) # finds the distance from the bottom of the board to the first 
+            k = ncol - np.argmax(board[:, col][::-1], axis=0) # finds the distance from the bottom of the board to the first 
             peaks = np.append(peaks, k)
         else:
             peaks = np.append(peaks, 0)
