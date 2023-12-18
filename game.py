@@ -1,6 +1,10 @@
 from board import Board
 from time import sleep
+from greedy import Greedy_AI
 from sai import Sai_AI
+from genetic import Genetic_AI
+from randomChoice import RandomChoice_NOT_AI
+from mcts import MCTS_AI
 from piece import Piece
 import pygame
 
@@ -20,8 +24,18 @@ class Game:
         self.top = 0
         self.pieces_dropped = 0
         self.rows_cleared = 0
-      
-        if mode == "sai":
+        if mode == "greedy":
+            self.ai = Greedy_AI()
+        elif mode == "genetic":
+            if agent == None:
+                self.ai = Genetic_AI()
+            else:
+                self.ai = agent
+        elif mode == "mcts":
+            self.ai = MCTS_AI()
+        elif mode == "random":
+            self.ai = RandomChoice_NOT_AI()
+        elif mode == "sai":
             self.ai = Sai_AI()
         else:
             self.ai = None
@@ -44,7 +58,7 @@ class Game:
         self.screenSize = self.screenWidth, self.screenHeight
         self.pieceHeight = (self.screenHeight - self.top) / self.board.height
         self.pieceWidth = self.screenWidth / self.board.width
-        self.screen = pygame.display.set_mode(self.screenSize)
+        self.screen = pygame.display.set_mode(self.screenSize, pygame.RESIZABLE)
         running = True
         if self.ai != None:
             MOVEEVENT, t = pygame.USEREVENT + 1, 100
