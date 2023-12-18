@@ -4,6 +4,7 @@ from game import Game
 from sai import Sai_AI
 import random
 import pandas as pd
+import pickle
 
 def cross(a1, a2):
 
@@ -25,17 +26,15 @@ def compute_fitness(agent, trials):
     fitness = []
     
     for i in range(trials):
-        game = Game('genetic', agent = agent)
+        game = Game('sai', agent = agent)
         peices_dropped, rows_cleared = game.run_no_visual()
         fitness.append(peices_dropped)
      
     return np.average(np.array(fitness))
 
-def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 50, num_elite = 5, survival_rate = .2, logging_file = 'data.csv'):
+def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 50, num_elite = 5, survival_rate = .2):
 
-    data = [[np.ones(3)]]
-    df = pd.DataFrame(data, columns = ['top_weight'])
-    df.to_csv(f'data/{logging_file}', index = False)
+    data = []
 
     population = [Sai_AI() for k in range(pop_size)]
 
@@ -76,11 +75,11 @@ def run_X_epochs(num_epochs = 5, num_trials = 5, pop_size = 50, num_elite = 5, s
             parents = random.sample(parents, 2)
             next_gen.append(cross(parents[0], parents[1]))
 
-        data = [[top_agent.weights]]
-        df = pd.DataFrame(data, columns = ["top_weight"])
-        df.to_csv(f'data/{logging_file}', mode = 'a', index = False, header = False)
-
         population = next_gen
+        data.append(top_agent.weights)
+    
+        with open("data.txt", "wb") as f:
+            pickle.dump(data, f)
 
     return data
 
